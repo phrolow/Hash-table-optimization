@@ -28,7 +28,7 @@ list_t *newList_(const char* func, const char* file, size_t line) {
 
 void ListDtor(list_t *list) {
     for(int i = 0; i < list->size; i++)
-        strcpy(list->data[i].name, "\0");
+        strcpy(list->data[i], "\0");
 
     list->size = 0;
     list->Head = 0;

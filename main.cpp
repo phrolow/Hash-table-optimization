@@ -17,5 +17,5 @@ int main(int argc, char **argv) {
         hashTableAdd(hasht1, words->pointers[i]);
     }
 
-    
+    hashTableDump(hasht1, stdout);
 }

@@ -13,7 +13,7 @@ void ListPhDelete(list_t *list, int physindex) {
 
     list->next[prev] = next;
     list->prev[physindex] = -1;
-    strcpy(list->data[physindex].name, "\0");
+    strcpy(list->data[physindex], "\0");
     list->next[physindex] = getfree(list);
     list->prev[next] = prev;
 
@@ -27,7 +27,7 @@ int ListIndexFirst(list_t *list, elem_t a) {
 
     do {
         next = list->next[next];
-    } while(strcmp(list->data[next].name, a.name) && next);
+    } while(strcmp(list->data[next], a) && next);
 
     if(next == 0)
         next = -1;
@@ -42,12 +42,12 @@ int ListPhIndexFirst(list_t *list, elem_t a) {
 void ListInit(list_t *list) {
     size_t i = 0;
 
-    strcpy(list->data[0].name, "");
+    strcpy(list->data[0], "");
     list->Head = 1;
     list->Tail = 0;
 
     for(i = 1; i < list->size; i++) {
-        strcpy(list->data[i].name, "");
+        strcpy(list->data[i], "");
         list->next[i] = i + 1;
         list->prev[i] = -1;
     }
@@ -67,11 +67,11 @@ void resize(list_t *list, size_t newsize) {
 
     newdata = (elem_t*)calloc(newsize, sizeof(elem_t));
 
-    strcpy(newdata[0].name, "");
+    strcpy(newdata[0], "");
 
     do {
         next = list->next[next];
-        strcpy(newdata[++i].name, list->data[next].name);
+        strcpy(newdata[++i], list->data[next]);
     } while(next);
 
     oldsize = i;
@@ -91,7 +91,7 @@ void resize(list_t *list, size_t newsize) {
     list->free = oldsize;
 
     for(i = oldsize; i < newsize; i++) {
-        strcpy(newdata[i].name, "");
+        strcpy(newdata[i], "");
         list->next[i] = i + 1;
         list->prev[i] = -1;
     }

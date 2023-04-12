@@ -1,6 +1,8 @@
 #ifndef HASHTABLE_HPP_INCLUDED
 #define HASHTABLE_HPP_INCLUDED
 
+#define DEBUG
+
 typedef char* word_t;
 
 #include "List/list.h"
@@ -11,7 +13,7 @@ const size_t POISON = 0xbaadf00dbaadf00d;
 struct hash_table_t
 {
     size_t size;
-    list_t *lists;
+    list_t **lists;
     unsigned int (*hash) (word_t);
 };
 
@@ -38,5 +40,11 @@ void hashTableAdd(hash_table_t *hashTable, elem_t elem);
 int hashTableSearch(hash_table_t *hashTable, elem_t elem);
 
 int hashTableListLength(hash_table_t *hashTable, size_t list_num);
+
+#ifdef DEBUG
+
+#include "Debug/debug.hpp"
+
+#endif
 
 #endif

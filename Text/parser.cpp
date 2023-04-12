@@ -1,4 +1,4 @@
-#include "hashtable.hpp"
+#include "../hashtable.hpp"
 
 text_t *parse(const char *path) {
     FILE *file_pointer = fopen(path, "rb");
@@ -25,7 +25,7 @@ text_t *parse(const char *path) {
         }
     }
 
-    word_t *pointers = (char **) calloc(sizeof(char*), num_words);
+    word_t *pointers = (char **) calloc(sizeof(char*), num_words + 1);
 
     pointers[0] = read_buf;
 
@@ -33,7 +33,7 @@ text_t *parse(const char *path) {
 
     for(int i = 1; i < file_length; i++) {
         if(!read_buf[i - 1] && read_buf[i]) {
-            pointers[++pointers_index] = read_buf + i;
+            pointers[++pointers_index] = read_buf + pointers_index;
         }
     }
 

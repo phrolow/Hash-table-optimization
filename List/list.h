@@ -16,7 +16,7 @@
 
 #define newList() newList_(_LOCATION_)
 
-typedef word_t  elem_t;
+typedef char* elem_t;
 
 typedef int err_t;
 
