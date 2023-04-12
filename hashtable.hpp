@@ -4,6 +4,7 @@
 typedef char* word_t;
 
 #include "List/list.h"
+#include "Text/text.hpp"
 
 const size_t HASH_TABLE_SIZE = 10;
 const size_t POISON = 0xbaadf00dbaadf00d;
