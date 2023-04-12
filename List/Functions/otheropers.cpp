@@ -1,10 +1,10 @@
 #include "../list.h"
 
-void ListDelete(list *list, int logindex) {
+void ListDelete(list_t *list, int logindex) {
     return ListPhDelete(list, physindex(list, logindex));
 }
 
-void ListPhDelete(list *list, int physindex) {
+void ListPhDelete(list_t *list, int physindex) {
     int next = 0,
         prev = 0;
 
@@ -22,20 +22,7 @@ void ListPhDelete(list *list, int physindex) {
     list->happy = 0;
 }
 
-int ListIndexFirst(list *list, const char *str) {
-    int next = 0;
-
-    do {
-        next = list->next[next];
-    } while(strcmp(list->data[next].name, str) && next);
-
-    if(next == 0)
-        return -1;
-
-    return next;
-}
-
-int ListIndexFirst(list *list, elem_t a) {
+int ListIndexFirst(list_t *list, elem_t a) {
     int next = 0;
 
     do {
@@ -48,11 +35,11 @@ int ListIndexFirst(list *list, elem_t a) {
     return next;
 }
 
-int ListPhIndexFirst(list *list, elem_t a) {
+int ListPhIndexFirst(list_t *list, elem_t a) {
     return physindex(list, ListIndexFirst(list, a));
 }
 
-void ListInit(list *list) {
+void ListInit(list_t *list) {
     size_t i = 0;
 
     strcpy(list->data[0].name, "");
@@ -72,7 +59,7 @@ void ListInit(list *list) {
     list->happy = 1;
 }
 
-void resize(list *list, size_t newsize) {
+void resize(list_t *list, size_t newsize) {
     elem_t *newdata = NULL;
     int i = 0,
         next = 0,

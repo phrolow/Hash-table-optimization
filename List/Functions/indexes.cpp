@@ -1,6 +1,6 @@
 #include "../list.h"
 
-int physindex(list *list, int logindex) {
+int physindex(list_t *list, int logindex) {
     if(list->happy)
         return logindex + (gethead(list) - 1);
 
@@ -13,32 +13,32 @@ int physindex(list *list, int logindex) {
     return pi;
 }
 
-int getnext(list *list, int physindex) {
+int getnext(list_t *list, int physindex) {
     if(physindex < 1 || physindex >= list->size)
         return -1;
 
     return list->next[physindex];
 }
 
-int getprev(list *list, int physindex) {
+int getprev(list_t *list, int physindex) {
     if(physindex < 1 || physindex >= list->size)
         return -1;
 
     return list->prev[physindex];
 }
 
-int isfree(list *list, int physindex) {
+int isfree(list_t *list, int physindex) {
     if(list->prev[physindex] == -1)
         return 1;
 
     return 0;
 }
 
-int getfree(list *list) {
+int getfree(list_t *list) {
     return list->free;
 }
 
-int putfree(list *list) {
+int putfree(list_t *list) {
     int free = 0;
 
     if(getnext(list, getfree(list)) == 0) {
@@ -52,10 +52,10 @@ int putfree(list *list) {
     return free;
 }
 
-int gethead(list *list) {
+int gethead(list_t *list) {
     return list->Head;
 }
 
-int gettail(list *list) {
+int gettail(list_t *list) {
     return list->Tail;
 }

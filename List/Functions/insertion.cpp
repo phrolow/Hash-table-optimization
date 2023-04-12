@@ -1,6 +1,6 @@
 #include "../list.h"
 
-void ListHeadInsert(list *list, elem_t a) {
+void ListHeadInsert(list_t *list, elem_t a) {
     int head = 0,
         free = 0;
 
@@ -17,7 +17,7 @@ void ListHeadInsert(list *list, elem_t a) {
     list->happy = 0;
 }
 
-void ListTailInsert(list *list, elem_t a) {
+void ListTailInsert(list_t *list, elem_t a) {
     int tail = 0,
         free = 0;
 
@@ -33,15 +33,15 @@ void ListTailInsert(list *list, elem_t a) {
     list->Tail = free;
 }
 
-void ListInsertAfter(list *list, elem_t a, int logindex) {
+void ListInsertAfter(list_t *list, elem_t a, int logindex) {
     ListPhInsertAfter(list, a, physindex(list, logindex));
 }
 
-void ListInsertBefore(list *list, elem_t a, int logindex) {
+void ListInsertBefore(list_t *list, elem_t a, int logindex) {
     ListPhInsertBefore(list, a, physindex(list, logindex));
 }
 
-void ListPhInsertAfter(list *list, elem_t a, int physindex) {
+void ListPhInsertAfter(list_t *list, elem_t a, int physindex) {
     int free = 0,
         next = 0;
 
@@ -60,7 +60,7 @@ void ListPhInsertAfter(list *list, elem_t a, int physindex) {
         list->happy = 0;
 }
 
-void ListPhInsertBefore(list *list, elem_t a, int physindex) {
+void ListPhInsertBefore(list_t *list, elem_t a, int physindex) {
     int free = 0,
         prev = 0;
 

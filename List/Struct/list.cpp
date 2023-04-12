@@ -1,13 +1,13 @@
 #include "../list.h"
 
-list *newList_(const char* func, const char* file, size_t line) {
+list_t *newList_(const char* func, const char* file, size_t line) {
     int i = 0;
 
     listinfo new_info = { NULL, NULL, 0 };
 //    list list = { NULL, NULL, NULL, 0, 0, 0, info };
 
 //    listinfo *new_info = (listinfo*) malloc(sizeof(listinfo));
-    list *new_list = (list*) malloc(sizeof(list));
+    list_t *new_list = (list_t*) malloc(sizeof(list_t));
 
     new_list->size = DEFAULTSIZE;
 
@@ -26,7 +26,7 @@ list *newList_(const char* func, const char* file, size_t line) {
     return new_list;
 }
 
-void ListDtor(list *list) {
+void ListDtor(list_t *list) {
     for(int i = 0; i < list->size; i++)
         strcpy(list->data[i].name, "\0");
 

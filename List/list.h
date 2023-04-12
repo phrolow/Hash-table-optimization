@@ -16,7 +16,7 @@
 
 #define newList() newList_(_LOCATION_)
 
-typedef char elem_t[WORLD_LENGTH];
+typedef word_t  elem_t;
 
 typedef int err_t;
 
@@ -34,77 +34,75 @@ typedef struct List {
     int happy,
         free;
     listinfo info;
-} list;
+} list_t;
 
 const size_t DEFAULTSIZE = 0x40;
 const size_t WORLD_LENGTH = 0x10;
 
-void add(list *q, elem_t a);
+void add(list_t *q, elem_t a);
 
-elem_t get(list *q);
+elem_t get(list_t *q);
 
-void resize(list *list, size_t newSize);
+void resize(list_t *list, size_t newSize);
 
-void del(list *q, int num);
+void del(list_t *q, int num);
 
-void insert(list *q, elem_t a, int num);
+void insert(list_t *q, elem_t a, int num);
 
-list *newList_(const char* func, const char* file, size_t line);
+list_t *newList_(const char* func, const char* file, size_t line);
 
-void ListDtor(list *list);
+void ListDtor(list_t *list);
 
 void ListDump_(struct List *list, const char *func, const char *file, size_t line);
 
-void ListGraphDump(list *list);
+void ListGraphDump(list_t *list);
 
 err_t ListCheck_(struct List *list, const char* func, const char* file, size_t line);
 
-int physindex(list *list, int logindex);
+int physindex(list_t *list, int logindex);
 
-int getprev(list *list, int physindex);
+int getprev(list_t *list, int physindex);
 
-int getnext(list *list, int physindex);
+int getnext(list_t *list, int physindex);
 
-int isfree(list *list, int physindex);
+int isfree(list_t *list, int physindex);
 
-int getfree(list *list);
+int getfree(list_t *list);
 
-int putfree(list *list);
+int putfree(list_t *list);
 
-int gethead(list *list);
+int gethead(list_t *list);
 
-int gettail(list *list);
+int gettail(list_t *list);
 
-elem_t *ListFirst(list *list);
+elem_t *ListFirst(list_t *list);
 
-elem_t *ListLast(list *list);
+elem_t *ListLast(list_t *list);
 
-elem_t *ListNext(list *list);
+elem_t *ListNext(list_t *list);
 
-elem_t *ListPrev(list *list);
+elem_t *ListPrev(list_t *list);
 
-void ListHeadInsert(list *list, elem_t a);
+void ListHeadInsert(list_t *list, elem_t a);
 
-void ListTailInsert(list *list, elem_t a);
+void ListTailInsert(list_t *list, elem_t a);
 
-void ListInsertAfter(list *list, elem_t a, int logindex);
+void ListInsertAfter(list_t *list, elem_t a, int logindex);
 
-void ListInsertBefore(list *list, elem_t a, int logindex);
+void ListInsertBefore(list_t *list, elem_t a, int logindex);
 
-void ListPhInsertAfter(list *list, elem_t a, int physindex);
+void ListPhInsertAfter(list_t *list, elem_t a, int physindex);
 
-void ListPhInsertBefore(list *list, elem_t a, int physindex);
+void ListPhInsertBefore(list_t *list, elem_t a, int physindex);
 
-void ListDelete(list *list, int logindex);
+void ListDelete(list_t *list, int logindex);
 
-void ListPhDelete(list *list, int physindex);
+void ListPhDelete(list_t *list, int physindex);
 
-int ListIndexFirst(list *list, const char *str);
+int ListIndexFirst(list_t *list, elem_t a);
 
-int ListIndexFirst(list *list, elem_t a);
+int ListPhIndexFirst(list_t *list, elem_t a);
 
-int ListPhIndexFirst(list *list, elem_t a);
-
-void ListInit(list *list);
+void ListInit(list_t *list);
 
 #endif
