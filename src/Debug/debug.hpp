@@ -4,6 +4,12 @@
 #include <assert.h>
 #include <stdio.h>
 
-void hashTableDump(hash_table_t *hashTable, FILE *stream);
+const size_t FILE_NAME_LEN = 0x20;
+
+const char * const CSV_FORMAT = "data/spreading%d.csv";
+
+void hashTableDetailWordDump(hash_table_t *hashTable, FILE *stream);
+
+void hashTableCsvDump(hash_table_t *hashTable, FILE *stream);
 
 #endif

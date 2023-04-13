@@ -5,6 +5,8 @@
 
 typedef char* word_t;
 
+#include <ctype.h>
+
 #include "List/list.h"
 #include "Text/text.hpp"
 

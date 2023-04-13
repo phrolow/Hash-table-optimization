@@ -33,7 +33,7 @@ void hashTableDtor(hash_table_t *hashTable) {
 void hashTableAdd(hash_table_t *hashTable, elem_t elem) {
     unsigned int list_num = hashTable->hash(elem);
 
-    ListTailInsert(hashTable->lists[list_num], elem);
+    ListTailInsert(hashTable->lists[list_num % HASH_TABLE_SIZE], elem);
 }
 
 int hashTableSearch(hash_table_t *hashTable, elem_t elem) {

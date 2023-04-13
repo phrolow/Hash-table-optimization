@@ -16,7 +16,7 @@ unsigned int hashSum(word_t word) {
     int i = 0;
     int sum = 0;
 
-    while(word[i]) sum++;
+    while(word[i] != '\0') sum += word[i++];
 
     return sum;
 }
@@ -53,7 +53,8 @@ unsigned int murmurHash2 (word_t word)
     const unsigned int seed = 0;
     const int r = 24;
 
-    unsigned int len = WORLD_LENGTH;
+    //unsigned int len = WORLD_LENGTH;
+    unsigned int len = strlen(word);
     unsigned int h = seed ^ len;
 
     const unsigned char * data = (const unsigned char *) word;

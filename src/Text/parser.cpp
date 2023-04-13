@@ -25,8 +25,6 @@ text_t *parse(const char *path) {
         }
     }
 
-    printf("%lu words\n", num_words);
-
     word_t *pointers = (char **) calloc(sizeof(char*), num_words + 1);
 
     pointers[0] = read_buf;
