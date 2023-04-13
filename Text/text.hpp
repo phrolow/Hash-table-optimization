@@ -12,4 +12,6 @@ struct text_t {
 
 text_t *parse(const char *path);
 
+void textDtor(text_t *text);
+
 #endif

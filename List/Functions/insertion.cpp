@@ -26,9 +26,9 @@ void ListTailInsert(list_t *list, elem_t a) {
 
     list->next[tail] = free;
     list->prev[free] = tail;
-    list->next[free] = {'\0'};
+    list->next[free] = 0;
 
-    strcpy(list->data[free], a);
+    list->data[free] = a;
 
     list->Tail = free;
 }

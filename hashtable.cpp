@@ -15,10 +15,18 @@ hash_table_t *hashTableCtor(size_t size, unsigned int (*hash) (word_t)) {
 }
 
 void hashTableDtor(hash_table_t *hashTable) {
-    hashTable->size = POISON;
-    free(hashTable->lists);
-    hashTable->hash = nullptr;
+    for(size_t i = 0; i < hashTable->size; i++) {
+        ListDtor(hashTable->lists[i]);
 
+        hashTable->lists[i] = nullptr;
+    }
+
+    hashTable->size = POISON;
+
+    free(hashTable->lists);
+    hashTable->lists = nullptr;
+    hashTable->hash = nullptr;
+    
     free(hashTable);
 }
 

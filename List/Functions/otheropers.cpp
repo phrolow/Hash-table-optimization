@@ -42,12 +42,12 @@ int ListPhIndexFirst(list_t *list, elem_t a) {
 void ListInit(list_t *list) {
     size_t i = 0;
 
-    strcpy(list->data[0], "");
+    list->data[0] = nullptr;
     list->Head = 1;
     list->Tail = 0;
 
     for(i = 1; i < list->size; i++) {
-        strcpy(list->data[i], "");
+        list->data[i] = nullptr;
         list->next[i] = i + 1;
         list->prev[i] = -1;
     }
@@ -71,7 +71,10 @@ void resize(list_t *list, size_t newsize) {
 
     do {
         next = list->next[next];
-        strcpy(newdata[++i], list->data[next]);
+
+        newdata[++i] = (char*) calloc(sizeof(char), strlen(list->data[next]));
+
+        strcpy(newdata[i], list->data[next]);
     } while(next);
 
     oldsize = i;
@@ -91,7 +94,7 @@ void resize(list_t *list, size_t newsize) {
     list->free = oldsize;
 
     for(i = oldsize; i < newsize; i++) {
-        strcpy(newdata[i], "");
+        newdata[i] = nullptr;
         list->next[i] = i + 1;
         list->prev[i] = -1;
     }

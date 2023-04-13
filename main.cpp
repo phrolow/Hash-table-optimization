@@ -11,6 +11,8 @@ int main(int argc, char **argv) {
 
     text_t *words = parse(path);
 
+    unsigned int (*hashes[7])(word_t) = { hash1, hashFirstLetter, hashWordLen, hashSum, hashRol, hashRor, murmurHash2 };
+
     hash_table_t *hasht1 = hashTableCtor(HASH_TABLE_SIZE, hash1);
 
     for(int i = 0; i < words->num_words; i++) {
@@ -18,4 +20,8 @@ int main(int argc, char **argv) {
     }
 
     hashTableDump(hasht1, stdout);
+
+    hashTableDtor(hasht1);
+    
+    textDtor(words);
 }

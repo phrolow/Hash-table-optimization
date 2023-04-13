@@ -13,17 +13,19 @@ text_t *parse(const char *path) {
 
     char *read_buf = (char *) calloc(sizeof(char), file_length + 1);
 
-    fread(read_buf, sizeof(char), file_length + 1, file_pointer);
+    fread(read_buf, sizeof(char), file_length, file_pointer);
 
     fclose(file_pointer);
 
-    size_t num_words = 0;
+    size_t num_words = 1;
 
     for(int i = 1; i < file_length; i++) {
         if(!read_buf[i - 1] && read_buf[i]) {
             num_words++;
         }
     }
+
+    printf("%lu words\n", num_words);
 
     word_t *pointers = (char **) calloc(sizeof(char*), num_words + 1);
 
@@ -33,7 +35,7 @@ text_t *parse(const char *path) {
 
     for(int i = 1; i < file_length; i++) {
         if(!read_buf[i - 1] && read_buf[i]) {
-            pointers[++pointers_index] = read_buf + pointers_index;
+            pointers[++pointers_index] = read_buf + i;
         }
     }
 

@@ -12,7 +12,9 @@ void hashTableDump(hash_table_t *hashTable, FILE *stream) {
 
         do {
             fprintf(stream, "%s, ", list->data[list_index]);
-        } while(list_index = getnext(list, list_index));
+
+            list_index = getnext(list, list_index);
+        } while(list->data[list_index]);
 
         fprintf(stream, "\n");
     }
