@@ -67,14 +67,16 @@ void resize(list_t *list, size_t newsize) {
 
     newdata = (elem_t*)calloc(newsize, sizeof(elem_t));
 
-    strcpy(newdata[0], "");
+    newdata[0] = nullptr;
 
     do {
         next = list->next[next];
 
-        newdata[++i] = (char*) calloc(sizeof(char), strlen(list->data[next]));
+        //newdata[++i] = (char*) calloc(sizeof(char), strlen(list->data[next]));
 
-        strcpy(newdata[i], list->data[next]);
+        //strcpy(newdata[i], list->data[next]);
+
+        newdata[++i] = list->data[next];
     } while(next);
 
     oldsize = i;
@@ -103,5 +105,7 @@ void resize(list_t *list, size_t newsize) {
 
     list->size = newsize;
     list->happy = 1;
+
+    free(list->data);
     list->data = newdata;
 }
