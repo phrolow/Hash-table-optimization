@@ -27,7 +27,10 @@ int ListIndexFirst(list_t *list, elem_t a) {
 
     do {
         next = list->next[next];
-    } while(strcmp(list->data[next], a) && next);
+
+        if(!list->data[next])
+            return -1;
+    } while(strcasecmp(list->data[next], a) && next);
 
     if(next == 0)
         next = -1;

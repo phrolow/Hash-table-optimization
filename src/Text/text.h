@@ -1,6 +1,8 @@
 #ifndef TEXT_HPP_INCLUDED
 #define TEXT_HPP_INCLUDED
 
+#include "../HashTable/hashtable.h"
+
 #include <sys/stat.h>
 
 struct text_t {

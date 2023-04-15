@@ -1,12 +1,12 @@
-#include "../hashtable.hpp"
+#include "../hashtable_optimization.h"
 
-void hashTableDetailWordDump(hash_table_t *hashTable, FILE *stream) {
+void hashTableDetailWordDump(hash_table_t *hash_table, FILE *stream) {
     fprintf(stream, "Hash table dump:\n");
 
-    for(int i = 0; i < hashTable->size; i++) {
+    for(int i = 0; i < hash_table->size; i++) {
         fprintf(stream, "\t[%d]: ", i);
 
-        list_t *list = hashTable->lists[i];
+        list_t *list = hash_table->lists[i];
 
         int list_index = gethead(list);
 
@@ -22,9 +22,9 @@ void hashTableDetailWordDump(hash_table_t *hashTable, FILE *stream) {
     fprintf(stream, "\n");
 }
 
-void hashTableCsvDump(hash_table_t *hashTable, FILE *stream) {
-    for(int i = 0; i < hashTable->size; i++) {
-        list_t *list = hashTable->lists[i];
+void hashTableCsvDump(hash_table_t *hash_table, FILE *stream) {
+    for(int i = 0; i < hash_table->size; i++) {
+        list_t *list = hash_table->lists[i];
 
         int list_index = gethead(list);
 

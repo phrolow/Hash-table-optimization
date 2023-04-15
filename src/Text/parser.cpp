@@ -1,4 +1,4 @@
-#include "../hashtable.hpp"
+#include "../hashtable_optimization.h"
 
 text_t *parse(const char *path) {
     FILE *file_pointer = fopen(path, "rb");

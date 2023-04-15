@@ -1,4 +1,4 @@
-#include "preprocessor.hpp"
+#include "preprocessor.h"
 
 void process(const char *path) {
     FILE *file_pointer = fopen(path, "rb");
@@ -18,7 +18,7 @@ void process(const char *path) {
     fclose(file_pointer);
 
     for(int i = 0; i < file_length; i++) {
-        if(isspace(read_buf[i]))
+        if(!isalpha(read_buf[i]))
             read_buf[i] = '\0';
     }
 

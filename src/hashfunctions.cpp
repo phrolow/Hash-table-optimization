@@ -1,4 +1,4 @@
-#include "hashtable.hpp"
+#include "hashtable_optimization.h"
 
 unsigned int hash1(word_t word) {
     return 1U;
