@@ -24,6 +24,9 @@ int main(int argc, char **argv) {
 
         hashTableCsvDump(hasht, dump);
 
+        measureSearch(hasht, words);
+        measureSearch(hasht, words);
+
         double search_time = measureSearch(hasht, words) / CLOCKS_PER_SEC;
 
         printf("%d: %lg s\n", i + 1, search_time);
