@@ -13,7 +13,7 @@
 #include <string.h>
 #include <sys/stat.h>
 
-const size_t BLOCK_SIZE = 16;
+const size_t BLOCK_SIZE = 32;
 
 void process(const char *path);
 

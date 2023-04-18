@@ -52,13 +52,14 @@ void process(const char *path) {
         }
 
         if(inserted && !(inserted % 16)) {
-            *((size_t*) (write_pointer))     = 0;
-            *((size_t*) (write_pointer + 8)) = 0;
+            for(size_t i = 0; i < BLOCK_SIZE / sizeof(size_t); i++) {
+                *((size_t*) (write_pointer) + sizeof(size_t) * i) = 0;
+            }
 
-            write_pointer += 16;
+            write_pointer += BLOCK_SIZE;
         }
 
-        while(inserted++ % 16) {
+        while(inserted++ % BLOCK_SIZE) {
             *write_pointer = '\0';
 
             write_pointer++;

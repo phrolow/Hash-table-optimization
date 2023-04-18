@@ -12,7 +12,7 @@ struct hash_table_t
     unsigned int (*hash)(word_t);
 };
 
-const size_t HASH_TABLE_SIZE = 317;
+const size_t HASH_TABLE_SIZE = 4973;
 const size_t POISON = 0xbaadf00dbaadf00d;
 
 hash_table_t *hashTableCtor(size_t size, unsigned int (*hash) (word_t));

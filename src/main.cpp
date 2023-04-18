@@ -15,25 +15,20 @@ int main(int argc, char **argv) {
 
     FILE *dump = fopen(CSV_FILE, "w");
 
-    for(int i = 0; i < 7; i++) {
-        hash_table_t *hasht = hashTableCtor(HASH_TABLE_SIZE, hashes[i]);
+    hash_table_t *hasht = hashTableCtor(HASH_TABLE_SIZE, murmurHash2);
 
-        for(int i = 0; i < words->num_words; i++) {
-            hashTableAdd(hasht, words->pointers[i]);
-        }
-
-        hashTableCsvDump(hasht, dump);
-
-        measureSearch(hasht, words);
-        measureSearch(hasht, words);
-
-        double search_time = measureSearch(hasht, words) / CLOCKS_PER_SEC;
-
-        printf("%d: %lg s\n", i + 1, search_time);
-
-        hashTableDtor(hasht);
+    for(int i = 0; i < words->num_words; i++) {
+        hashTableAdd(hasht, words->pointers[i]);
     }
 
+    hashTableCsvDump(hasht, dump);
+
+    double search_time = measureSearch(hasht, words) / CLOCKS_PER_SEC;
+
+    printf("%lg s\n", search_time);
+
+    hashTableDtor(hasht);
+    
     fclose(dump);
     
     textDtor(words);
