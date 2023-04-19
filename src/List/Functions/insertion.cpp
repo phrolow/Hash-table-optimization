@@ -51,7 +51,9 @@ void ListPhInsertAfter(list_t *list, elem_t a, int physindex) {
     list->next[physindex] = free;
     list->prev[free] = physindex;
 
-    strcpy(list->data[free], a);
+    //strcpy(list->data[free], a);
+
+    list->data[free] = a;
 
     list->next[free] = next;
     list->prev[next] = free;
@@ -70,7 +72,9 @@ void ListPhInsertBefore(list_t *list, elem_t a, int physindex) {
     list->next[prev] = free;
     list->prev[free] = prev;
 
-    strcpy(list->data[free], a);
+    //strcpy(list->data[free], a);
+
+    a = list->data[free];
 
     list->next[free] = physindex;
     list->prev[physindex] = free;

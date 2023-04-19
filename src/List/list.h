@@ -8,6 +8,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <immintrin.h>
+
 #define _LOCATION_ __PRETTY_FUNCTION__, __FILE__, __LINE__
 #define Head next[0]
 #define Tail prev[0]
@@ -16,7 +18,7 @@
 
 #define newList() newList_(_LOCATION_)
 
-typedef char* elem_t;
+typedef __m256i elem_t;
 
 typedef int err_t;
 
@@ -36,6 +38,7 @@ typedef struct List {
     listinfo info;
 } list_t;
 
+const size_t DATA_ALIGNMENT = 0x20;
 const size_t DEFAULTSIZE = 0x40;
 const size_t WORLD_LENGTH = 0x10;
 

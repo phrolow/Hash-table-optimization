@@ -33,8 +33,9 @@ void hashTableDtor(hash_table_t *hash_table) {
 void hashTableAdd(hash_table_t *hash_table, elem_t elem) {
     unsigned int list_num = hash_table->hash(elem) % HASH_TABLE_SIZE;
 
-    if(ListIndexFirst(hash_table->lists[list_num], elem) == -1)
+    if(ListIndexFirst(hash_table->lists[list_num], elem) == -1) {
         ListTailInsert(hash_table->lists[list_num], elem);
+    }
 }
 
 int hashTableSearch(hash_table_t *hash_table, elem_t elem) {

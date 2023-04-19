@@ -13,7 +13,8 @@ void ListPhDelete(list_t *list, int physindex) {
 
     list->next[prev] = next;
     list->prev[physindex] = -1;
-    strcpy(list->data[physindex], "\0");
+    //strcpy(list->data[physindex], "\0");
+    list->data[physindex] = _mm256_setzero_si256();
     list->next[physindex] = getfree(list);
     list->prev[next] = prev;
 
@@ -25,17 +26,25 @@ void ListPhDelete(list_t *list, int physindex) {
 int ListIndexFirst(list_t *list, elem_t a) {
     int next = 0;
 
+    // do {
+    //     next = list->next[next];
+
+    //     if(!list->next[next])
+    //         return -1;
+    // } while((a != list->data[next]) && next);
+
     do {
         next = list->next[next];
 
-        if(!list->data[next])
-            return -1;
-    } while(strcasecmp(list->data[next], a) && next);
+        // unsigned char inequal = _mm256_cmpeq_epi64_mask(a, list->data[next]);
 
-    if(next == 0)
-        next = -1;
+        unsigned char inequal = _mm256_movemask_epi8(_mm256_cmpeq_epi64(a, list->data[next]));
 
-    return next;
+        if(!inequal)
+            return next;
+    } while(next);
+
+    return -1;
 }
 
 int ListPhIndexFirst(list_t *list, elem_t a) {
@@ -45,12 +54,17 @@ int ListPhIndexFirst(list_t *list, elem_t a) {
 void ListInit(list_t *list) {
     size_t i = 0;
 
-    list->data[0] = nullptr;
+    //list->data[0] = nullptr;
+    __m256i Z = _mm256_setzero_si256();
+
+    _mm256_store_si256(list->data, Z);
+    
     list->Head = 1;
     list->Tail = 0;
 
     for(i = 1; i < list->size; i++) {
-        list->data[i] = nullptr;
+        //list->data[i] = nullptr;
+        list->data[i] = _mm256_setzero_si256();
         list->next[i] = i + 1;
         list->prev[i] = -1;
     }
@@ -70,7 +84,7 @@ void resize(list_t *list, size_t newsize) {
 
     newdata = (elem_t*)calloc(newsize, sizeof(elem_t));
 
-    newdata[0] = nullptr;
+    newdata[0] = _mm256_setzero_si256();;
 
     do {
         next = list->next[next];
@@ -99,7 +113,7 @@ void resize(list_t *list, size_t newsize) {
     list->free = oldsize;
 
     for(i = oldsize; i < newsize; i++) {
-        newdata[i] = nullptr;
+        newdata[i] = _mm256_setzero_si256();
         list->next[i] = i + 1;
         list->prev[i] = -1;
     }

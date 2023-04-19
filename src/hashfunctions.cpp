@@ -8,9 +8,9 @@ unsigned int hashFirstLetter(word_t word) {
     return (int) word[1];
 }
 
-unsigned int hashWordLen(word_t word) {
-    return strlen(word);
-}
+// unsigned int hashWordLen(word_t word) {
+//     return strlen(word);
+// }
 
 unsigned int hashSum(word_t word) {
     int i = 0;
@@ -21,51 +21,46 @@ unsigned int hashSum(word_t word) {
     return sum;
 }
 
-unsigned int hashRol(word_t word) {
-    unsigned int hash = 0;
+// unsigned int hashRol(word_t word) {
+//     unsigned int hash = 0;
     
-    size_t len = strlen(word);
+//     size_t len = strlen(word);
 
-    for (size_t i = 0; i < len; ++i)
-    {
-        hash = ((hash >> 31) | (hash << 1)) xor word[i];
-    }
+//     for (size_t i = 0; i < len; ++i)
+//     {
+//         hash = ((hash >> 31) | (hash << 1)) xor word[i];
+//     }
 
-    return hash;
-}
+//     return hash;
+// }
 
-unsigned int hashRor(word_t word) {
-    unsigned int hash = 0;
+// unsigned int hashRor(word_t word) {
+//     unsigned int hash = 0;
     
-    size_t len = strlen(word);
+//     size_t len = strlen(word);
 
-    for (size_t i = 0; i < len; ++i)
-    {
-        hash = ((hash << 31) | (hash >> 1)) xor word[i];
-    }
+//     for (size_t i = 0; i < len; ++i)
+//     {
+//         hash = ((hash << 31) | (hash >> 1)) xor word[i];
+//     }
 
-    return hash;
-}
+//     return hash;
+// }
 
-unsigned int murmurHash2 (word_t word)
-{
-    const unsigned int m = 0x5bd1e995;
-    const unsigned int seed = 0;
+unsigned int murmurHash2 (word_t word) {
+    const unsigned seed = 0xeda;
+    unsigned len = 0x20;
+
+    const unsigned m = 0x5bd1e995;
     const int r = 24;
 
-    //unsigned int len = WORLD_LENGTH;
-    unsigned int len = strlen(word);
-    unsigned int h = seed ^ len;
+    unsigned h = seed ^ len;
 
-    const unsigned char * data = (const unsigned char *) word;
-    unsigned int k = 0;
+    unsigned char * data = (unsigned char *) &word;
 
-    while (len >= 4)
+    while(len >= 4)
     {
-        k  = data[0];
-        k |= data[1] << 8;
-        k |= data[2] << 16;
-        k |= data[3] << 24;
+        unsigned k = *((unsigned *) data);
 
         k *= m;
         k ^= k >> r;
@@ -78,14 +73,11 @@ unsigned int murmurHash2 (word_t word)
         len -= 4;
     }
 
-    switch (len)
+    switch(len)
     {
-        case 3:
-        h ^= data[2] << 16;
-        case 2:
-        h ^= data[1] << 8;
-        case 1:
-        h ^= data[0];
+    case 3: h ^= data[2] << 16;
+    case 2: h ^= data[1] << 8;
+    case 1: h ^= data[0];
         h *= m;
     };
 

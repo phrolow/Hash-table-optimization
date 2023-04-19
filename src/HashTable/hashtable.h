@@ -1,7 +1,9 @@
 #ifndef HASHTABLE_HPP_INCLUDED
 #define HASHTABLE_HPP_INCLUDED
 
-typedef char* word_t;
+#include <immintrin.h>
+
+typedef __m256i word_t;
 
 #include "../List/list.h"
 

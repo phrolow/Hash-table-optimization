@@ -3,13 +3,14 @@
 
 #include "../HashTable/hashtable.h"
 
+#include <immintrin.h>
 #include <sys/stat.h>
 
 struct text_t {
     size_t text_length;
     char *text;
     size_t num_words;
-    word_t *pointers;
+    word_t *words;
 };
 
 text_t *parse(const char *path);

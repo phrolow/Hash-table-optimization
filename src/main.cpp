@@ -11,14 +11,12 @@ int main(int argc, char **argv) {
 
     text_t *words = parse(path);
 
-    unsigned int (*hashes[7])(word_t) = { hash1, hashFirstLetter, hashWordLen, hashSum, hashRol, hashRor, murmurHash2 };
-
     FILE *dump = fopen(CSV_FILE, "w");
 
     hash_table_t *hasht = hashTableCtor(HASH_TABLE_SIZE, murmurHash2);
 
     for(int i = 0; i < words->num_words; i++) {
-        hashTableAdd(hasht, words->pointers[i]);
+        hashTableAdd(hasht, words->words[i]);
     }
 
     hashTableCsvDump(hasht, dump);
