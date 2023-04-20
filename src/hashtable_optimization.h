@@ -8,6 +8,8 @@
 #include "HashTable/hashtable.h"
 #include "Tests/tests.h"
 
+extern "C" unsigned int _simdCrc32(word_t word);
+
 unsigned int hash1(word_t word);
 
 unsigned int hashFirstLetter(word_t word);
