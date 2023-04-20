@@ -288,7 +288,9 @@ const unsigned int m = 0x5bd1e995;
 
 ![Callgrind](/images/callgrind list simds.png)
 
-Далее я заменил хеш-функцию на инлайн 
+Далее я заменил хеш-функцию **murmurHash2** на **simdCrc32**, которая использует инлайн **_mm_crc32_u32** (**callgrind.out.56986**), время работы сократилось еще сильнее - **мс** 
+
+![Callgrind](/images/callgrind simdCrc32.png)
  ### Использование ассемблерных средств
 
  #### Ассмеблерные вставки

@@ -38,9 +38,9 @@ int ListIndexFirst(list_t *list, elem_t a) {
 
         // unsigned char inequal = _mm256_cmpeq_epi64_mask(a, list->data[next]);
 
-        unsigned char inequal = _mm256_movemask_epi8(_mm256_cmpeq_epi64(a, list->data[next]));
+        unsigned char equal = _mm256_movemask_epi8(_mm256_cmpeq_epi64(a, list->data[next]));
 
-        if(!inequal)
+        if(equal == 255)
             return next;
     } while(next);
 

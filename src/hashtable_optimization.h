@@ -22,6 +22,8 @@ unsigned int hashRor(word_t word);
 
 unsigned int murmurHash2(word_t word);
 
+unsigned int simdCrc32(word_t word);
+
 #ifdef DEBUG
 
 #include "Debug/debug.h"

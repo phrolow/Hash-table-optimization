@@ -28,19 +28,21 @@ void hashTableCsvDump(hash_table_t *hash_table, FILE *stream) {
 
         int list_index = gethead(list);
 
+        list_index = getnext(list, list_index);
+
         size_t num_words = 0;
 
-        // do {
-        //     ++num_words;
+        int zero = _mm256_movemask_epi8(_mm256_cmpeq_epi64(_mm256_setzero_si256(), list->data[list_index]));
 
-        //     list_index = getnext(list, list_index);
-        // } while(list->data[list_index]);
-
-        do {
+        while(zero != -1 && list_index){
+        //while(list_index) {
+            //printf("%s\n", (char*) list->data + list_index);
             num_words++;
 
             list_index = getnext(list, list_index);
-        } while(list->next[list_index]);
+
+            zero = _mm256_movemask_epi8(_mm256_cmpeq_epi64(_mm256_setzero_si256(), list->data[list_index]));
+        }
 
         fprintf(stream, "%lu\t", num_words);
     }

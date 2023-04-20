@@ -87,3 +87,20 @@ unsigned int murmurHash2 (word_t word) {
 
     return h;
 }
+
+unsigned int simdCrc32(word_t word) {
+    unsigned int hash = 0;
+
+    union {
+        word_t key;
+        unsigned int blocks[sizeof(word_t) / sizeof(unsigned int)];
+    } cvt;
+
+    cvt.key = word;
+
+    for(size_t i = 0; i < sizeof(word_t) / sizeof(unsigned int); i++) {
+        hash = _mm_crc32_u32(hash, cvt.blocks[i]);
+    }
+    
+    return hash;
+}
