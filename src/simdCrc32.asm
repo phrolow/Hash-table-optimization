@@ -7,7 +7,26 @@ _simdCrc32:
         push    rbp
         mov     rbp, rsp
         and     rsp, -32
+
+        vmovdqa YWORD [rsp-64], ymm0    ; store __m256i to memory
+
+        mov     eax, DWORD [rsp - 64]   ; 1st block (4 bytes)
+                                        ; next 4 bytes
+        crc32   eax, DWORD [rsp - 60]   ; using crc32
+        crc32   eax, DWORD [rsp - 56]   ; and so on for 7 times  
+        crc32   eax, DWORD [rsp - 52]  
+        crc32   eax, DWORD [rsp - 48] 
+        crc32   eax, DWORD [rsp - 44]    
+        crc32   eax, DWORD [rsp - 40]
+        crc32   eax, DWORD [rsp - 36]   
         
+        mov rsp, rbp
+        pop rbp
+        ret
+
+;         push    rbp
+;         mov     rbp, rsp
+;         and     rsp, -32
 ;         vmovdqa YWORD [rsp-96], ymm0
 ;         mov     DWORD [rsp-4], 0
 ;         vmovdqa ymm0, YWORD [rsp-96]
@@ -29,35 +48,6 @@ _simdCrc32:
 ; .L2:
 ;         cmp     QWORD [rsp-16], 7
 ;         jbe     .L4
-
-        vmovdqa YWORD [rsp-64], ymm0    ; store __m256i to memory
-
-        mov     eax, DWORD [rsp - 64]   ; 1st block (4 bytes)
-
-        mov     edx, DWORD [rsp - 60]   ; next 4 bytes
-        crc32   eax, edx                ; using crc32
-                                        ; and so on for 7 times
-        mov     edx, DWORD [rsp - 56]   
-        crc32   eax, edx
-        
-        mov     edx, DWORD [rsp - 52]   
-        crc32   eax, edx
-        
-        mov     edx, DWORD [rsp - 48]   
-        crc32   eax, edx
-        
-        mov     edx, DWORD [rsp - 44]   
-        crc32   eax, edx
-        
-        mov     edx, DWORD [rsp - 40]   
-        crc32   eax, edx
-
-        mov     edx, DWORD [rsp - 36]   
-        crc32   eax, edx
-
-        mov     DWORD [rsp-4], eax
-        mov     eax, DWORD [rsp-4]
-
-        mov rsp, rbp
-        pop rbp
-        ret
+;         mov     eax, DWORD [rsp-4]
+;         leave
+;         ret
