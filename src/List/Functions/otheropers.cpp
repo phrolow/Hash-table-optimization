@@ -26,17 +26,8 @@ void ListPhDelete(list_t *list, int physindex) {
 int ListIndexFirst(list_t *list, elem_t a) {
     int next = 0;
 
-    // do {
-    //     next = list->next[next];
-
-    //     if(!list->next[next])
-    //         return -1;
-    // } while((a != list->data[next]) && next);
-
     do {
         next = list->next[next];
-
-        // unsigned char inequal = _mm256_cmpeq_epi64_mask(a, list->data[next]);
 
         unsigned char equal = _mm256_movemask_epi8(_mm256_cmpeq_epi64(a, list->data[next]));
 

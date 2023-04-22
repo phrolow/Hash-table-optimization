@@ -1,5 +1,7 @@
 #include "../hashtable_optimization.h"
 
+#pragma GCC diagnostic ignored "-Wunused-result"
+
 text_t *parse(const char *path) {
     FILE *file_pointer = fopen(path, "rb");
 

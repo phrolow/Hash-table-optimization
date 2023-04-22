@@ -1,5 +1,7 @@
 #include "hashtable_optimization.h"
 
+#pragma GCC diagnostic ignored "-Wreturn-type"
+
 unsigned int hash1(word_t word) {
     return 1U;
 }
@@ -88,19 +90,45 @@ unsigned int murmurHash2 (word_t word) {
     return h;
 }
 
-unsigned int simdCrc32(word_t word) {
-    unsigned int hash = 0;
+// unsigned int simdCrc32(word_t word) {
+//     unsigned int hash = 0;
 
-    union {
-        word_t key;
-        unsigned int blocks[sizeof(word_t) / sizeof(unsigned int)];
-    } cvt;
+//     union {
+//         word_t key;
+//         unsigned int blocks[sizeof(word_t) / sizeof(unsigned int)];
+//     } cvt;
 
-    cvt.key = word;
+//     cvt.key = word;
 
-    for(size_t i = 0; i < sizeof(word_t) / sizeof(unsigned int); i++) {
-        hash = _mm_crc32_u32(hash, cvt.blocks[i]);
-    }
+//     for(size_t i = 0; i < sizeof(word_t) / sizeof(unsigned int); i++) {
+//         hash = _mm_crc32_u32(hash, cvt.blocks[i]);
+//     }
     
-    return hash;
+//     return hash;
+// }
+
+unsigned int simdCrc32(word_t word) {
+    asm(
+        ".intel_syntax noprefix\n"
+        "push    rbp\n"
+        "mov     rbp, rsp\n"
+        "and     rsp, -32\n"
+
+        "vmovdqa YMMWORD [rsp-64], ymm0\n"    
+
+        "mov     eax, DWORD [rsp - 64]\n"  
+                                        
+        "crc32d   eax, DWORD [rsp - 60]\n"   
+        "crc32d   eax, DWORD [rsp - 56]\n"
+        "crc32d   eax, DWORD [rsp - 52]\n"  
+        "crc32d   eax, DWORD [rsp - 48]\n" 
+        "crc32d   eax, DWORD [rsp - 44]\n"    
+        "crc32d   eax, DWORD [rsp - 40]\n"
+        "crc32d   eax, DWORD [rsp - 36]\n"   
+        
+        "mov rsp, rbp\n"
+        "pop rbp\n"
+        "ret\n"
+        ".att_syntax prefix"
+    );
 }
