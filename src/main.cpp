@@ -13,10 +13,10 @@ int main(int argc, char **argv) {
 
     FILE *dump = fopen(CSV_FILE, "w");
 
-    hash_table_t *hasht = hashTableCtor(HASH_TABLE_SIZE, simdCrc32);
+    hash_table_t *hasht = hashTableCtor(HASH_TABLE_SIZE);
 
     for(int i = 0; i < words->num_words; i++) {
-        hashTableAdd(hasht, words->words[i]);
+        hashTableAdd(hasht, words->words + i);
     }
 
     hashTableCsvDump(hasht, dump);

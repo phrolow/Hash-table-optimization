@@ -14,7 +14,7 @@ text_t *parse(const char *path) {
     size_t file_length = file_stat.st_size;
 
     //char *read_buf = (char *) calloc(sizeof(char), file_length + 1);
-    char *read_buf = (char*)aligned_alloc(DATA_ALIGNMENT, sizeof(char) * (file_length + 1));
+    char *read_buf = (char*)aligned_alloc(DATA_ALIGNMENT, sizeof(char) * (file_length + 32));
 
     memset(read_buf, 0, sizeof(elem_t) * DEFAULTSIZE);
 

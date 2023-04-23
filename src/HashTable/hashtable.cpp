@@ -1,11 +1,10 @@
 #include "hashtable.h"
 
-hash_table_t *hashTableCtor(size_t size, unsigned int (*hash) (word_t)) {
+hash_table_t *hashTableCtor(size_t size) {
     hash_table_t *hash_table = (hash_table_t*) calloc(sizeof(hash_table_t), 1);
 
     hash_table->size  = size;
     hash_table->lists = (list_t**) calloc(sizeof(list_t*), size);
-    hash_table->hash  = hash;
 
     for(size_t i = 0; i < size; i++) {
         hash_table->lists[i] = newList();
@@ -25,23 +24,22 @@ void hashTableDtor(hash_table_t *hash_table) {
 
     free(hash_table->lists);
     hash_table->lists = nullptr;
-    hash_table->hash = nullptr;
     
     free(hash_table);
 }
 
-void hashTableAdd(hash_table_t *hash_table, elem_t elem) {
-    unsigned int list_num = hash_table->hash(elem) % HASH_TABLE_SIZE;
+void hashTableAdd(hash_table_t *hash_table, elem_t *elem) {
+    unsigned int list_num = simdCrc32(elem) % HASH_TABLE_SIZE;
 
-    if(ListIndexFirst(hash_table->lists[list_num], elem) == -1) {
-        ListTailInsert(hash_table->lists[list_num], elem);
+    if(ListIndexFirst(hash_table->lists[list_num], *elem) == -1) {
+        ListTailInsert(hash_table->lists[list_num], *elem);
     }
 }
 
-int hashTableSearch(hash_table_t *hash_table, elem_t elem) {
-    unsigned int list_num = hash_table->hash(elem) % HASH_TABLE_SIZE;
+int hashTableSearch(hash_table_t *hash_table, elem_t *elem) {
+    unsigned int list_num = simdCrc32(elem) % HASH_TABLE_SIZE;
 
-    return ListIndexFirst(hash_table->lists[list_num], elem);
+    return ListIndexFirst(hash_table->lists[list_num], *elem);
 }
 
 int hashTableListLength(hash_table_t *hash_table, size_t list_num) {
