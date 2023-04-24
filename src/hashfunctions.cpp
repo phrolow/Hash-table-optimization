@@ -107,28 +107,28 @@ unsigned int murmurHash2 (word_t word) {
 //     return hash;
 // }
 
-unsigned int simdCrc32(word_t *word) {
-    unsigned int hash = 0;
+// unsigned int simdCrc32(word_t *word) {
+//     unsigned int hash = 0;
 
-    asm(
-        ".intel_syntax noprefix\n"
+//     asm(
+//         ".intel_syntax noprefix\n"
 
-        "xor rax, rax\n"
+//         "xor rax, rax\n"
 
-        "mov      eax, DWORD [rdi]\n"  
+//         "mov      eax, DWORD [rdi]\n"  
                                         
-        "crc32d   eax, DWORD [rdi - 4]\n"   
-        "crc32d   eax, DWORD [rdi - 8]\n"
-        "crc32d   eax, DWORD [rdi - 12]\n"  
-        "crc32d   eax, DWORD [rdi - 16]\n" 
-        "crc32d   eax, DWORD [rdi - 20]\n"    
-        "crc32d   eax, DWORD [rdi - 24]\n"
-        "crc32d   eax, DWORD [rdi - 28]\n"   
+//         "crc32d   eax, DWORD [rdi - 4]\n"   
+//         "crc32d   eax, DWORD [rdi - 8]\n"
+//         "crc32d   eax, DWORD [rdi - 12]\n"  
+//         "crc32d   eax, DWORD [rdi - 16]\n" 
+//         "crc32d   eax, DWORD [rdi - 20]\n"    
+//         "crc32d   eax, DWORD [rdi - 24]\n"
+//         "crc32d   eax, DWORD [rdi - 28]\n"   
 
-        ".att_syntax prefix"
-        : "=a" (hash)
-        : "D" (word)
-    );
+//         ".att_syntax prefix"
+//         : "=a" (hash)
+//         : "D" (word)
+//     );
 
-    return hash;
-}
+//     return hash;
+// }
