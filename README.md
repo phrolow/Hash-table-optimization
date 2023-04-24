@@ -222,7 +222,7 @@ const unsigned int m = 0x5bd1e995;
 
 Я переписал лист (и заодно парсер текста) под тип данных **__m256i** и вставил SIMD-овские инлайны для сравнения элементов листа в **ListIndexFirst**. Новое время работы - **0,840 мс**, ощутимый прирост производительности налицо (**callgrind.out.60879**).
 
-![Callgrind](/images/callgrind_list simds.png)
+![Callgrind](/images/callgrind_list_simds.png)
 
 Далее я заменил хеш-функцию **murmurHash2** на **simdCrc32**, которая использует инлайн **_mm_crc32_u32** (**callgrind.out.56986**), время работы сократилось еще сильнее - **0,595 мс** 
 
