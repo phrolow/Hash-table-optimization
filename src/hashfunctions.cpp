@@ -107,57 +107,28 @@ unsigned int murmurHash2 (word_t word) {
 //     return hash;
 // }
 
-// unsigned int simdCrc32(word_t word) {
-//     asm(
-//         ".intel_syntax noprefix\n"
-//         "push    rbp\n"
-//         "mov     rbp, rsp\n"
-//         "and     rsp, -32\n"
+unsigned int simdCrc32(word_t *word) {
+    unsigned int hash = 0;
 
-//         "vmovdqa YMMWORD [rsp-64], ymm0\n"    
+    asm(
+        ".intel_syntax noprefix\n"
 
-//         "mov     eax, DWORD [rsp - 64]\n"  
+        "xor rax, rax\n"
+
+        "mov      eax, DWORD [rdi]\n"  
                                         
-//         "crc32d   eax, DWORD [rsp - 60]\n"   
-//         "crc32d   eax, DWORD [rsp - 56]\n"
-//         "crc32d   eax, DWORD [rsp - 52]\n"  
-//         "crc32d   eax, DWORD [rsp - 48]\n" 
-//         "crc32d   eax, DWORD [rsp - 44]\n"    
-//         "crc32d   eax, DWORD [rsp - 40]\n"
-//         "crc32d   eax, DWORD [rsp - 36]\n"   
-        
-//         "mov rsp, rbp\n"
-//         "pop rbp\n"
-//         "ret\n"
-//         ".att_syntax prefix"
-//     );
-// }
+        "crc32d   eax, DWORD [rdi - 4]\n"   
+        "crc32d   eax, DWORD [rdi - 8]\n"
+        "crc32d   eax, DWORD [rdi - 12]\n"  
+        "crc32d   eax, DWORD [rdi - 16]\n" 
+        "crc32d   eax, DWORD [rdi - 20]\n"    
+        "crc32d   eax, DWORD [rdi - 24]\n"
+        "crc32d   eax, DWORD [rdi - 28]\n"   
 
-// unsigned int simdCrc32(word_t *word) {
-//     unsigned int hash = 0;
+        ".att_syntax prefix"
+        : "=a" (hash)
+        : "D" (word)
+    );
 
-//     asm(
-//         ".intel_syntax noprefix\n"  
-
-//         "mov      eax, DWORD [rdi - 64]\n"  
-                                        
-//         "crc32d   eax, DWORD [rdi - 60]\n"   
-//         "crc32d   eax, DWORD [rdi - 56]\n"
-//         "crc32d   eax, DWORD [rdi - 52]\n"  
-//         "crc32d   eax, DWORD [rdi - 48]\n" 
-//         "crc32d   eax, DWORD [rdi - 44]\n"    
-//         "crc32d   eax, DWORD [rdi - 40]\n"
-//         "crc32d   eax, DWORD [rdi - 36]\n"   
-
-//         ".att_syntax prefix"
-//         : "=a" (hash)
-//         : "D" (word)
-//     );
-
-//     // asm {
-//     //     "movl -64(%1)"
-//     // }
-
-//     return hash;
-// }
-
+    return hash;
+}
